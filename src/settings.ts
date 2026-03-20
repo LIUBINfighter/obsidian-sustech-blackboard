@@ -1,36 +1,50 @@
-import {App, PluginSettingTab, Setting} from "obsidian";
-import MyPlugin from "./main";
+import { type App, PluginSettingTab, Setting } from "obsidian";
+import type SUSTechBlackboardPlugin from "./main";
+import {
+	type BlackboardBrowserState,
+	createDefaultBrowserState,
+} from "./schema";
 
-export interface MyPluginSettings {
-	mySetting: string;
+export interface BlackboardPluginSettings {
+	openWorkbenchOnStartup: boolean;
+	browser: BlackboardBrowserState;
 }
 
-export const DEFAULT_SETTINGS: MyPluginSettings = {
-	mySetting: 'default'
-}
+export const BLACKBOARD_DEFAULT_SETTINGS: BlackboardPluginSettings = {
+	openWorkbenchOnStartup: false,
+	browser: createDefaultBrowserState(),
+};
 
-export class SampleSettingTab extends PluginSettingTab {
-	plugin: MyPlugin;
+export class BlackboardSettingTab extends PluginSettingTab {
+	plugin: SUSTechBlackboardPlugin;
 
-	constructor(app: App, plugin: MyPlugin) {
+	constructor(app: App, plugin: SUSTechBlackboardPlugin) {
 		super(app, plugin);
 		this.plugin = plugin;
 	}
 
 	display(): void {
-		const {containerEl} = this;
-
+		const { containerEl } = this;
 		containerEl.empty();
 
+		new Setting(containerEl).setName("Workspace").setHeading();
+		containerEl.createEl("p", {
+			text: "Phase 1 controls stay inside the Blackboard view. This settings tab only keeps startup behavior.",
+			cls: "sb-setting-intro",
+		});
+
 		new Setting(containerEl)
-			.setName('Settings #1')
-			.setDesc('It\'s a secret')
-			.addText(text => text
-				.setPlaceholder('Enter your secret')
-				.setValue(this.plugin.settings.mySetting)
-				.onChange(async (value) => {
-					this.plugin.settings.mySetting = value;
-					await this.plugin.saveSettings();
-				}));
+			.setName("Open Blackboard on startup")
+			.setDesc(
+				"Open the Blackboard view automatically when Obsidian finishes loading.",
+			)
+			.addToggle((toggle) =>
+				toggle
+					.setValue(this.plugin.settings.openWorkbenchOnStartup)
+					.onChange(async (value) => {
+						this.plugin.settings.openWorkbenchOnStartup = value;
+						await this.plugin.saveSettings();
+					}),
+			);
 	}
 }

@@ -1,8 +1,287 @@
-/*
+.sb-workbench {
+	height: 100%;
+	overflow-y: auto;
+	background: var(--background-primary);
+	color: var(--text-normal);
+	font-family: var(--font-interface);
+}
 
-This CSS file will be included with your plugin, and
-available in the app when your plugin is enabled.
+.sb-shell {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 16px;
+	display: grid;
+	gap: 12px;
+}
 
-If your plugin does not need CSS, delete this file.
+.sb-header,
+.sb-body--browser {
+	display: grid;
+	gap: 12px;
+}
 
-*/
+.sb-header--browser {
+	grid-template-columns: minmax(0, 1.7fr) minmax(260px, 0.8fr);
+	align-items: start;
+}
+
+.sb-header__copy,
+.sb-panel,
+.sb-status-card,
+.sb-category,
+.sb-page {
+	border: 1px solid var(--background-modifier-border);
+	background: var(--background-secondary);
+	border-radius: 8px;
+	box-shadow: none;
+}
+
+.sb-header__copy,
+.sb-panel,
+.sb-status-card,
+.sb-category {
+	padding: 14px;
+	display: grid;
+	gap: 10px;
+}
+
+.sb-header__copy h1,
+.sb-panel h2,
+.sb-panel h3,
+.sb-panel h4,
+.sb-category h3 {
+	margin: 0;
+	line-height: 1.3;
+	font-weight: 600;
+	font-family: var(--font-interface);
+	color: var(--text-normal);
+}
+
+.sb-header__copy h1 {
+	font-size: 1.35rem;
+	max-width: none;
+}
+
+.sb-header__copy p,
+.sb-panel p,
+.sb-section__text,
+.sb-file-row__meta,
+.sb-meta-line {
+	margin: 0;
+	color: var(--text-muted);
+	font-family: var(--font-text);
+	font-size: var(--font-text-size);
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+.sb-eyebrow,
+.sb-field__label,
+.sb-status-card__label {
+	font-size: 0.82rem;
+	font-weight: 500;
+	color: var(--text-muted);
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+}
+
+.sb-status-card__message,
+.sb-file-row__name {
+	font-weight: 600;
+	color: var(--text-normal);
+}
+
+.sb-status-card__error {
+	color: var(--text-error);
+	font-size: var(--font-ui-small);
+	line-height: 1.4;
+}
+
+.sb-fields-grid {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 10px;
+}
+
+.sb-field {
+	display: grid;
+	gap: 4px;
+}
+
+.sb-input {
+	width: 100%;
+	padding: 8px 10px;
+	border-radius: 6px;
+	border: 1px solid var(--background-modifier-border);
+	background: var(--background-primary);
+	color: var(--text-normal);
+	font-family: var(--font-text);
+	font-size: var(--font-text-size);
+	line-height: 1.55;
+	box-sizing: border-box;
+	box-shadow: none;
+}
+
+.sb-input:focus {
+	outline: none;
+	border-color: var(--interactive-accent);
+	box-shadow: 0 0 0 2px color-mix(in srgb, var(--interactive-accent) 18%, transparent);
+}
+
+.sb-actions-row,
+.sb-content-header {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.sb-content-header {
+	padding-bottom: 6px;
+	border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.sb-content-header__copy,
+.sb-content-header__actions,
+.sb-course-list,
+.sb-file-list,
+.sb-page__body {
+	display: grid;
+	gap: 8px;
+}
+
+.sb-body--browser {
+	grid-template-columns: minmax(260px, 320px) minmax(0, 1fr);
+	align-items: start;
+}
+
+.sb-button,
+.sb-list-button {
+	border: 1px solid var(--background-modifier-border);
+	background: var(--background-primary);
+	color: var(--text-normal);
+	padding: 8px 10px;
+	border-radius: 6px;
+	font: inherit;
+	font-weight: 500;
+	cursor: pointer;
+	transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
+	text-align: left;
+	box-shadow: none;
+}
+
+.sb-button:hover,
+.sb-list-button:hover {
+	background: var(--background-modifier-hover);
+	border-color: var(--background-modifier-border-hover, var(--background-modifier-border));
+}
+
+.sb-button:disabled,
+.sb-list-button:disabled {
+	cursor: default;
+	opacity: 0.6;
+	background: var(--background-secondary);
+}
+
+.sb-list-button.is-selected {
+	border-color: var(--interactive-accent);
+	background: color-mix(in srgb, var(--interactive-accent) 14%, var(--background-primary));
+}
+
+.sb-term {
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 6px;
+	background: var(--background-primary);
+	overflow: hidden;
+}
+
+.sb-term__summary,
+.sb-page__summary {
+	list-style: none;
+	cursor: pointer;
+	padding: 10px 12px;
+	font-weight: 600;
+	color: var(--text-normal);
+	background: var(--background-primary);
+}
+
+.sb-term__summary::-webkit-details-marker,
+.sb-page__summary::-webkit-details-marker {
+	display: none;
+}
+
+.sb-course-list,
+.sb-page__body {
+	padding: 0 12px 12px;
+}
+
+.sb-category {
+	gap: 10px;
+}
+
+.sb-page {
+	overflow: hidden;
+}
+
+.sb-section {
+	padding: 10px;
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 6px;
+	background: var(--background-primary);
+	display: grid;
+	gap: 8px;
+}
+
+.sb-file-row {
+	display: flex;
+	gap: 10px;
+	justify-content: space-between;
+	align-items: center;
+	padding: 10px;
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 6px;
+	background: var(--background-primary);
+}
+
+.sb-file-row__copy {
+	display: grid;
+	gap: 2px;
+	min-width: 0;
+}
+
+.sb-file-row__name,
+.sb-file-row__meta {
+	overflow-wrap: anywhere;
+}
+
+.sb-footer {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px 10px;
+	align-items: center;
+	padding: 0 2px;
+	color: var(--text-muted);
+	font-size: var(--font-ui-small);
+}
+
+.sb-footer__status {
+	font-weight: 500;
+	color: var(--text-normal);
+}
+
+.sb-footer__hint {
+	margin-left: auto;
+}
+
+@media (max-width: 1100px) {
+	.sb-header--browser,
+	.sb-body--browser,
+	.sb-fields-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.sb-footer__hint {
+		margin-left: 0;
+	}
+}
