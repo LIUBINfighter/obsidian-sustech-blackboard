@@ -6,19 +6,20 @@
 
 ![alt text](./assets/image.png)
 
-批量下载：一键查看当前学期所有课程资料并一次性下载。
-
-只写：我们不做同步，去重，断点续传等复杂逻辑。就按照给定的目录直接下载。请不要在默认或者你自定义的下载目录下覆盖或者编辑，可能导致你的修改被覆盖造成损失。
-
-不保存你的密码：考虑到一次性批量下载的频率较低，以及Obsidian还是没有比较好的官方密码存储的方法，我们将认证学号和密码的填写直接摆在workbench的界面，防止把密码明文存储到本地。
-
-侧边栏按钮呼出： 书本的小 icon，点击打开管理界面
-
-命令行呼出：`ctrl+p(win)/cmd+p(macos)` 然后键入 sus 选择 `SUSTech-Blackboard Open Workbench` 即可打开 管理界面
+- 单文件下载：在 Workbench 界面浏览课程资料并选择性下载。默认下载到仓库下 `Blackboard/` 目录下。
+- 批量下载：一键查看当前学期所有课程资料并一次性下载。
+- 只写：我们不做同步，去重，断点续传等复杂逻辑。就按照给定的目录直接下载。请不要在默认或者你自定义的下载目录下覆盖或者编辑，可能导致你的修改被覆盖造成损失。
+- 不保存你的密码：考虑到一次性批量下载的频率较低，以及Obsidian还是没有比较好的官方密码存储的方法，我们将认证学号和密码的填写直接摆在workbench的界面，防止把密码明文存储到本地。
+- 侧边栏按钮呼出： 书本的小 icon，点击打开管理界面
+- 命令行呼出：`ctrl+p(win)/cmd+p(macos)` 然后键入 sus 选择 `SUSTech-Blackboard Open Workbench` 即可打开管理界面。
 
 ## 作者的话
 
-一直很苦于下载和同步blackboard平台上面的各种附件，直到我遇到了 SVSmate，查看各类附件变得非常简单。感谢他们的工作！不过我之后发现vscode的管理方式有些麻烦，因为vscode的按键和各类入口实在是太多了，有时候全局安装SVSmate也有些不明不白的Notice打扰，或者手滑需要重新认证。最大的痛点则是我没找到一键下载所有附件的简单入口，每次都要点开复杂的层级下载然后决定把文件下载到哪里哪里。
+一直很苦于下载和同步blackboard平台上面的各种附件，直到我遇到了 SVSmate，查看各类附件变得非常简单。感谢他们的工作！
+
+不过我之后发现vscode的管理方式有些麻烦，因为vscode的按键和各类入口实在是太多了，有时候全局安装SVSmate也有些不明不白的Notice打扰，或者手滑需要重新认证。
+
+最大的痛点则是我没找到一键下载所有附件的简单入口，每次都要点开复杂的层级下载然后决定把文件下载到哪里哪里。
 
 所以这个Obsidian插件的思路很简单，就是一键下载，然后你可以在本地想怎么管理怎么管理自己的附件。
 
@@ -28,35 +29,33 @@
 
 目标下载目录只有一个目的：（支持批量）下载bb系统上的附件。
 
+## 当前阶段支持的功能
 
+目前插件已经支持：
 
-## Phase 1 scope
+- 通过南科大 CAS 登录并加载 Blackboard 学期与课程列表
+- 在 `ItemView` 中查看当前课程的内容树
+- 按需下载单个文件
+- 将当前课程完整下载到仓库内相对路径的目标文件夹中，同时保留 Blackboard 原有目录结构
 
-The current plugin supports:
+## 界面说明
 
-- loading Blackboard terms and courses from SUSTech CAS login
-- viewing the current course content tree inside the ItemView
-- downloading a single file on demand
-- downloading the current course into a vault-relative destination folder while preserving the Blackboard directory hierarchy
+所有 Blackboard 相关操作都集中在当前 `ItemView` 中：
 
-## Interface
+- 学号输入
+- 当前会话使用的密码输入
+- 目标文件夹输入
+- 课程列表浏览
+- 单文件下载按钮
+- **下载当前课程** 操作
 
-All Blackboard operations stay inside the current `ItemView`:
+## 补充说明
 
-- username input
-- password input for the current session only
-- destination folder input
-- course list browser
-- single-file download buttons
-- **Download current course** action
+- 本插件仅支持桌面端。
+- 网络请求只会发送到南科大 CAS 与 Blackboard。
+- 下载得到的文件只会写入当前 Obsidian 仓库中。
 
-## Notes
-
-- The plugin is desktop-only.
-- Network requests are sent only to SUSTech CAS and Blackboard.
-- Downloaded files are written inside the current vault.
-
-## Development
+## 开发
 
 ```bash
 npm install

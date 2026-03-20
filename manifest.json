@@ -1,9 +1,9 @@
 {
-	"id": "obsidian-sustech-blackboard",
+	"id": "sustech-blackboard",
 	"name": "SUSTech Blackboard",
-	"version": "1.0.0",
+	"version": "0.1.0",
 	"minAppVersion": "1.5.0",
-	"description": "Browse and download SUSTech Blackboard course content inside Obsidian.",
+	"description": "Browse and download SUSTech Blackboard course attachments. 一键下载南科大bb系统附件",
 	"author": "LIUBINfighter",
 	"authorUrl": "https://github.com/LIUBINfighter",
 	"isDesktopOnly": true
