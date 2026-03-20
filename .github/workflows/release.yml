@@ -13,6 +13,46 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
+            - uses: actions/checkout@v4
+
+            - name: Use Node.js 22
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 22.x
+                  cache: "npm"
+
+            - name: Verify release metadata
+              run: |
+                  node <<'EOF'
+                  const manifest = require('./manifest.json');
+                  const pkg = require('./package.json');
+                  const versions = require('./versions.json');
+                  const tag = process.env.GITHUB_REF_NAME;
+
+                  if (pkg.version !== manifest.version) {
+                    throw new Error(`package.json version ${pkg.version} does not match manifest version ${manifest.version}.`);
+                  }
+
+                  if (tag !== manifest.version) {
+                    throw new Error(`Tag ${tag} does not match manifest version ${manifest.version}.`);
+                  }
+
+                  if (versions[manifest.version] !== manifest.minAppVersion) {
+                    throw new Error(
+                      `versions.json entry for ${manifest.version} does not match minAppVersion ${manifest.minAppVersion}.`,
+                    );
+                  }
+                  EOF
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Run tests
+              run: npm test
+
+            - name: Build plugin
+              run: npm run build
+
             - name: Create draft release
               uses: softprops/action-gh-release@v2
               with:
@@ -20,3 +60,8 @@ jobs:
                   name: ${{ github.ref_name }}
                   draft: true
                   generate_release_notes: true
+                  fail_on_unmatched_files: true
+                  files: |
+                      main.js
+                      manifest.json
+                      styles.css

@@ -1,6 +1,6 @@
 {
 	"name": "sustech-blackboard",
-	"version": "1.0.0",
+	"version": "0.1.0",
 	"description": "Browse and download SUSTech Blackboard course content. 一键下载南科大bb系统附件到本地。",
 	"main": "main.js",
 	"type": "module",

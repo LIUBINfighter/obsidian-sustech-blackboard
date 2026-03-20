@@ -10,8 +10,9 @@
 - 批量下载：一键查看当前学期所有课程资料并一次性下载。
 - 只写：我们不做同步，去重，断点续传等复杂逻辑。就按照给定的目录直接下载。请不要在默认或者你自定义的下载目录下覆盖或者编辑，可能导致你的修改被覆盖造成损失。
 - 不保存你的密码：考虑到一次性批量下载的频率较低，以及Obsidian还是没有比较好的官方密码存储的方法，我们将认证学号和密码的填写直接摆在workbench的界面，防止把密码明文存储到本地。
+- 会保存基础浏览状态：插件会保存学号、目标下载目录、最近一次加载的课程列表和浏览状态，方便下次继续使用。
 - 侧边栏按钮呼出： 书本的小 icon，点击打开管理界面
-- 命令行呼出：`ctrl+p(win)/cmd+p(macos)` 然后键入 sus 选择 `SUSTech-Blackboard Open Workbench` 即可打开管理界面。
+- 命令行呼出：`ctrl+p(win)/cmd+p(macos)` 然后键入 sus，选择 `SUSTech Blackboard: Open workbench` 即可打开管理界面。
 
 ## 作者的话
 
@@ -62,3 +63,33 @@ npm install
 npm test
 npm run build
 ```
+
+## 发布
+
+发布前请先确认以下几项：
+
+- `package.json`、`manifest.json`、`versions.json` 中的版本号保持一致
+- `manifest.json` 中的 `minAppVersion` 与 `versions.json` 的映射一致
+- 本地先执行一次 `npm test` 和 `npm run build`
+
+推荐的发布流程：
+
+```bash
+npm version <new-version>
+git push origin master --follow-tags
+```
+
+例如首次发布当前版本时，可以使用：
+
+```bash
+npm version 0.1.0
+git push origin master --follow-tags
+```
+
+仓库中的 GitHub Actions 会在推送任意 tag 后自动：
+
+- 安装依赖并重新构建插件
+- 创建对应版本的 draft release
+- 上传 `main.js`、`manifest.json`、`styles.css` 三个发布资产
+
+注意：发布使用的 tag 应与 `manifest.json` 中的版本号完全一致，例如 `0.1.0`，不要加 `v` 前缀。
