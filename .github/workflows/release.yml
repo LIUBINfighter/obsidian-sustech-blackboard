@@ -53,6 +53,10 @@ jobs:
             - name: Build plugin
               run: npm run build
 
+            - name: Create release bundle
+              run: |
+                  zip -j "sustech-blackboard-${{ github.ref_name }}.zip" main.js manifest.json styles.css
+
             - name: Create draft release
               uses: softprops/action-gh-release@v2
               with:
@@ -65,3 +69,4 @@ jobs:
                       main.js
                       manifest.json
                       styles.css
+                      sustech-blackboard-${{ github.ref_name }}.zip
