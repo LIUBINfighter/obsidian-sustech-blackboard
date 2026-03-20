@@ -5,7 +5,7 @@ import type { AddressInfo } from 'node:net';
 
 import { BlackboardHttpClient } from '../src/blackboard/http';
 
-test('BlackboardHttpClient follows redirects and reuses cookies across requests', async () => {
+void test('BlackboardHttpClient follows redirects and reuses cookies across requests', async () => {
 	const server = createServer((request, response) => {
 		const url = request.url ?? '/';
 		const cookie = request.headers.cookie ?? '';
@@ -70,7 +70,7 @@ test('BlackboardHttpClient follows redirects and reuses cookies across requests'
 	}
 });
 
-test('BlackboardHttpClient can leave redirects manual when needed', async () => {
+void test('BlackboardHttpClient can leave redirects manual when needed', async () => {
 	const server = createServer((request, response) => {
 		if (request.url === '/manual') {
 			response.writeHead(302, { Location: '/next' });

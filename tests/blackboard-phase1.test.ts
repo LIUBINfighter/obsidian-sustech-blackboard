@@ -8,17 +8,17 @@ import { parsePage } from '../src/blackboard/parsers/page';
 import { createCourseDownloadPlan } from '../src/blackboard/indexing';
 import type { BlackboardCourseSnapshot } from '../src/blackboard/models';
 
-test('sanitizePathSegment removes illegal characters and trims dots', () => {
+void test('sanitizePathSegment removes illegal characters and trims dots', () => {
 	assert.equal(sanitizePathSegment(' Week 01: Intro?.pdf '), 'Week 01_ Intro_.pdf');
 	assert.equal(sanitizePathSegment('...'), '_');
 });
 
-test('joinVaultPath normalizes nested vault paths', () => {
+void test('joinVaultPath normalizes nested vault paths', () => {
 	assert.equal(joinVaultPath('Blackboard/', '/25spring', 'CS101'), 'Blackboard/25spring/CS101');
 	assert.equal(joinVaultPath('', 'Blackboard', 'Week 1'), 'Blackboard/Week 1');
 });
 
-test('parseCourseList groups Blackboard courses by normalized term', async () => {
+void test('parseCourseList groups Blackboard courses by normalized term', async () => {
 	const xml = `
 		<contents><![CDATA[
 			<h3 class="termHeading-coursefakeclass"><a id="termCourses__2025_1">（Spring 2025）</a></h3>
@@ -38,7 +38,7 @@ test('parseCourseList groups Blackboard courses by normalized term', async () =>
 	assert.match(result[0]?.courses[0]?.url ?? '', /course_id=_1_1/);
 });
 
-test('parseSidebar extracts grouped page links', () => {
+void test('parseSidebar extracts grouped page links', () => {
 	const html = `
 		<div id="courseMenuPalette_contents">
 			<li><h3>Course Content</h3></li>
@@ -56,7 +56,7 @@ test('parseSidebar extracts grouped page links', () => {
 	assert.match(sidebar[0]?.pages[0]?.url ?? '', /content_id=_1_1/);
 });
 
-test('parsePage extracts text and files from Blackboard content items', () => {
+void test('parsePage extracts text and files from Blackboard content items', () => {
 	const html = `
 		<li class="clearfix liItem read">
 			<h3>Lecture slides</h3>
@@ -77,7 +77,7 @@ test('parsePage extracts text and files from Blackboard content items', () => {
 	);
 });
 
-test('createCourseDownloadPlan preserves Blackboard hierarchy under destination folder', () => {
+void test('createCourseDownloadPlan preserves Blackboard hierarchy under destination folder', () => {
 	const snapshot: BlackboardCourseSnapshot = {
 		termId: '25spring',
 		course: {

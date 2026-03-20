@@ -1,21 +1,17 @@
-import tseslint from 'typescript-eslint';
+import { globalIgnores } from "eslint/config";
 import obsidianmd from "eslint-plugin-obsidianmd";
 import globals from "globals";
-import { globalIgnores } from "eslint/config";
+import tseslint from "typescript-eslint";
 
 export default tseslint.config(
 	{
 		languageOptions: {
 			globals: {
 				...globals.browser,
+				...globals.node,
 			},
 			parserOptions: {
-				projectService: {
-					allowDefaultProject: [
-						'eslint.config.js',
-						'manifest.json'
-					]
-				},
+				project: ['./tsconfig.eslint.json'],
 				tsconfigRootDir: import.meta.dirname,
 				extraFileExtensions: ['.json']
 			},

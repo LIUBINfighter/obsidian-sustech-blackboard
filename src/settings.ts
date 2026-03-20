@@ -29,14 +29,14 @@ export class BlackboardSettingTab extends PluginSettingTab {
 
 		new Setting(containerEl).setName("Workspace").setHeading();
 		containerEl.createEl("p", {
-			text: "Phase 1 controls stay inside the Blackboard view. This settings tab only keeps startup behavior.",
+			text: "Most blackboard controls stay inside the dedicated view. This settings tab currently keeps startup behavior only.",
 			cls: "sb-setting-intro",
 		});
 
 		new Setting(containerEl)
-			.setName("Open Blackboard on startup")
+			.setName("Open workbench on startup")
 			.setDesc(
-				"Open the Blackboard view automatically when Obsidian finishes loading.",
+				"Open the blackboard view automatically when Obsidian finishes loading.",
 			)
 			.addToggle((toggle) =>
 				toggle

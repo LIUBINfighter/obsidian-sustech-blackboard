@@ -149,7 +149,7 @@ async function main(): Promise<void> {
 		const snapshot = await service.loadCourseSnapshot(term, course, 'student', 'password');
 		const summary = await service.downloadCourse(snapshot, 'Blackboard', 'student', 'password');
 
-		console.log(JSON.stringify({
+		console.debug(JSON.stringify({
 			terms: terms.map((item) => item.id),
 			course: snapshot.course.name,
 			categories: snapshot.categories.map((item) => item.title),

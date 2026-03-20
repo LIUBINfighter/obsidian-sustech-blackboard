@@ -32,7 +32,7 @@ class MemoryVault {
 	}
 }
 
-test('BlackboardService completes Phase1 course load and download flow with the real HTTP client', async () => {
+void test('BlackboardService completes Phase1 course load and download flow with the real HTTP client', async () => {
 	const server = createServer((request, response) => {
 		const url = new URL(request.url ?? '/', `http://${request.headers.host}`);
 		const cookie = request.headers.cookie ?? '';
@@ -145,8 +145,11 @@ test('BlackboardService completes Phase1 course load and download flow with the 
 		assert.ok(term);
 		const course = term?.courses[0];
 		assert.ok(course);
+		if (!term || !course) {
+			throw new Error('Expected term and course after successful load.');
+		}
 
-		const snapshot = await service.loadCourseSnapshot(term!, course!, 'student', 'password');
+		const snapshot = await service.loadCourseSnapshot(term, course, 'student', 'password');
 		assert.equal(snapshot.categories.length, 1);
 		assert.equal(snapshot.categories[0]?.pages.length, 1);
 

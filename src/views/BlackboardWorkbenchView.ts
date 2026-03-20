@@ -1,6 +1,7 @@
 import { ItemView, type WorkspaceLeaf } from 'obsidian';
 import type { BlackboardCourseSnapshot, BlackboardFile, BlackboardPageSection, BlackboardTerm } from '../blackboard/models';
 import type SUSTechBlackboardPlugin from '../main';
+import { DEFAULT_DESTINATION_FOLDER } from '../schema';
 
 export const BLACKBOARD_WORKBENCH_VIEW_TYPE = 'sustech-blackboard-workbench';
 
@@ -17,7 +18,7 @@ export class BlackboardWorkbenchView extends ItemView {
 	}
 
 	getDisplayText(): string {
-		return 'SUSTech Blackboard';
+		return 'Sustech blackboard';
 	}
 
 	getIcon(): string {
@@ -49,9 +50,9 @@ export class BlackboardWorkbenchView extends ItemView {
 		const copy = header.createDiv({ cls: 'sb-header__copy' });
 
 		copy.createDiv({ cls: 'sb-eyebrow', text: 'SUSTech Blackboard' });
-		copy.createEl('h1', { text: 'Phase 1 browser' });
+		copy.createEl('h1', { text: 'Blackboard workbench' });
 		copy.createEl('p', {
-			text: 'Browse Blackboard course content inside Obsidian and download single files or the current course into a vault folder.',
+			text: 'Browse blackboard course content inside Obsidian and download single files or the current course into a vault folder.',
 		});
 
 		const runtime = this.plugin.getRuntimeState();
@@ -86,7 +87,7 @@ export class BlackboardWorkbenchView extends ItemView {
 			fieldGrid,
 			'Destination folder',
 			this.plugin.settings.browser.destinationFolder,
-			'Vault-relative path, for example Blackboard',
+			`Vault-relative path, for example ${DEFAULT_DESTINATION_FOLDER}`,
 			false,
 		);
 
@@ -94,7 +95,9 @@ export class BlackboardWorkbenchView extends ItemView {
 			void this.plugin.updateBrowserPreferences({ username: usernameInput.value });
 		});
 		folderInput.addEventListener('change', () => {
-			void this.plugin.updateBrowserPreferences({ destinationFolder: folderInput.value.trim() || 'Blackboard' });
+			void this.plugin.updateBrowserPreferences({
+				destinationFolder: folderInput.value.trim() || DEFAULT_DESTINATION_FOLDER,
+			});
 		});
 		passwordInput.addEventListener('input', () => {
 			this.plugin.setSessionPassword(passwordInput.value);
@@ -117,7 +120,7 @@ export class BlackboardWorkbenchView extends ItemView {
 		container.createEl('h2', { text: 'Courses' });
 		const terms = this.plugin.settings.browser.terms;
 		if (terms.length === 0) {
-			container.createEl('p', { text: 'Load Blackboard to see your course list.' });
+			container.createEl('p', { text: 'Load blackboard to see your course list.' });
 			return;
 		}
 
@@ -150,7 +153,7 @@ export class BlackboardWorkbenchView extends ItemView {
 		const snapshot = this.plugin.settings.browser.currentCourse;
 		if (!snapshot) {
 			container.createEl('h2', { text: 'Current content' });
-			container.createEl('p', { text: 'Select a course to view its Blackboard structure and available files.' });
+			container.createEl('p', { text: 'Select a course to view its blackboard structure and available files.' });
 			return;
 		}
 
@@ -170,7 +173,7 @@ export class BlackboardWorkbenchView extends ItemView {
 		actionButton.disabled = this.plugin.getRuntimeState().isBusy || filesCount === 0;
 
 		if (snapshot.categories.length === 0) {
-			container.createEl('p', { text: 'This course loaded successfully, but no downloadable Blackboard content was found.' });
+			container.createEl('p', { text: 'This course loaded successfully, but no downloadable blackboard content was found.' });
 			return;
 		}
 
@@ -184,7 +187,7 @@ export class BlackboardWorkbenchView extends ItemView {
 				const pageBody = pageEl.createDiv({ cls: 'sb-page__body' });
 
 				if (page.sections.length === 0) {
-					pageBody.createEl('p', { text: 'No downloadable files were found on this Blackboard page.' });
+					pageBody.createEl('p', { text: 'No downloadable files were found on this blackboard page.' });
 					continue;
 				}
 
@@ -209,7 +212,7 @@ export class BlackboardWorkbenchView extends ItemView {
 		}
 
 		if (section.files.length === 0) {
-			sectionEl.createEl('p', { text: 'This Blackboard item has no attachments.' });
+			sectionEl.createEl('p', { text: 'This blackboard item has no attachments.' });
 			return;
 		}
 

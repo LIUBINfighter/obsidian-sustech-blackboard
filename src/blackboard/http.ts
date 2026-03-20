@@ -87,9 +87,9 @@ export class BlackboardHttpClient implements BlackboardHttpClientLike {
 					...headers,
 				},
 			}, (response) => {
-				const chunks: Buffer[] = [];
-				response.on('data', (chunk) => {
-					chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
+				const chunks: Uint8Array[] = [];
+				response.on('data', (chunk: unknown) => {
+					chunks.push(normalizeBodyChunk(chunk));
 				});
 				response.on('end', () => {
 					const buffer = Buffer.concat(chunks);
@@ -226,6 +226,26 @@ function shouldChangeToGet(method: 'GET' | 'POST', status: number): boolean {
 	return method === 'POST' && (status === 301 || status === 302 || status === 303);
 }
 
-function toArrayBuffer(buffer: Buffer): ArrayBuffer {
+function normalizeBodyChunk(chunk: unknown): Uint8Array {
+	if (typeof chunk === 'string') {
+		return Buffer.from(chunk);
+	}
+
+	if (chunk instanceof Uint8Array) {
+		return chunk;
+	}
+
+	if (chunk instanceof ArrayBuffer) {
+		return new Uint8Array(chunk);
+	}
+
+	if (ArrayBuffer.isView(chunk)) {
+		return new Uint8Array(chunk.buffer, chunk.byteOffset, chunk.byteLength);
+	}
+
+	throw new Error('Unexpected response body chunk type.');
+}
+
+function toArrayBuffer(buffer: Uint8Array): ArrayBuffer {
 	return buffer.buffer.slice(buffer.byteOffset, buffer.byteOffset + buffer.byteLength);
 }

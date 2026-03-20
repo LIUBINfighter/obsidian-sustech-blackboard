@@ -1,5 +1,8 @@
 import type { BlackboardCourseSnapshot, BlackboardTerm } from './blackboard/models';
 
+// Example: "SUSTech/Blackboard", "Course Materials", or a semester template.
+export const DEFAULT_DESTINATION_FOLDER = 'Blackboard';
+
 export interface BlackboardBrowserState {
 	username: string;
 	destinationFolder: string;
@@ -13,7 +16,7 @@ export interface BlackboardBrowserState {
 export function createDefaultBrowserState(): BlackboardBrowserState {
 	return {
 		username: '',
-		destinationFolder: 'Blackboard',
+		destinationFolder: DEFAULT_DESTINATION_FOLDER,
 		terms: [],
 		selectedTermId: '',
 		selectedCourseUrl: '',

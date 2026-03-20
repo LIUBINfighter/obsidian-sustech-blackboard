@@ -11,7 +11,10 @@ import {
 	type BlackboardProgressUpdate,
 	BlackboardService,
 } from "./blackboard/service";
-import { createDefaultBrowserState } from "./schema";
+import {
+	createDefaultBrowserState,
+	DEFAULT_DESTINATION_FOLDER,
+} from "./schema";
 import {
 	BLACKBOARD_DEFAULT_SETTINGS,
 	type BlackboardPluginSettings,
@@ -55,13 +58,13 @@ export default class SUSTechBlackboardPlugin extends Plugin {
 			(leaf: WorkspaceLeaf) => new BlackboardWorkbenchView(leaf, this),
 		);
 
-		this.addRibbonIcon("book-open", "Open SUSTech Blackboard", async () => {
+		this.addRibbonIcon("book-open", "Open blackboard workbench", async () => {
 			await this.activateWorkbenchView();
 		});
 
 		this.addCommand({
 			id: "open-blackboard-workbench",
-			name: "Open SUSTech Blackboard",
+			name: "Open workbench",
 			callback: async () => {
 				await this.activateWorkbenchView();
 			},
@@ -88,7 +91,7 @@ export default class SUSTechBlackboardPlugin extends Plugin {
 		if (!existingLeaf) {
 			const nextLeaf = workspace.getLeaf("tab");
 			if (!nextLeaf) {
-				new Notice("Could not open the Blackboard view.");
+				new Notice("Could not open the blackboard view.");
 				return;
 			}
 			leaf = nextLeaf;
@@ -145,7 +148,8 @@ export default class SUSTechBlackboardPlugin extends Plugin {
 	): Promise<void> {
 		await this.withBusyState("Loading Blackboard courses…", async () => {
 			this.sessionPassword = password;
-			const sanitizedFolder = destinationFolder.trim() || "Blackboard";
+			const sanitizedFolder =
+				destinationFolder.trim() || DEFAULT_DESTINATION_FOLDER;
 			const terms = await this.service.loadTerms(username, password);
 			const selectedTerm = this.pickSelectedTerm(
 				terms,
@@ -178,7 +182,7 @@ export default class SUSTechBlackboardPlugin extends Plugin {
 		const term = this.settings.browser.terms.find((item) => item.id === termId);
 		const course = term?.courses.find((item) => item.url === courseUrl);
 		if (!term || !course) {
-			new Notice("Could not find that Blackboard course in the current list.");
+			new Notice("Could not find that blackboard course in the current list.");
 			return;
 		}
 
@@ -214,7 +218,7 @@ export default class SUSTechBlackboardPlugin extends Plugin {
 	): Promise<void> {
 		const snapshot = this.settings.browser.currentCourse;
 		if (!snapshot) {
-			new Notice("Load a Blackboard course first.");
+			new Notice("Load a blackboard course first.");
 			return;
 		}
 
@@ -237,7 +241,7 @@ export default class SUSTechBlackboardPlugin extends Plugin {
 	async downloadCurrentCourse(): Promise<void> {
 		const snapshot = this.settings.browser.currentCourse;
 		if (!snapshot) {
-			new Notice("Load a Blackboard course first.");
+			new Notice("Load a blackboard course first.");
 			return;
 		}
 
